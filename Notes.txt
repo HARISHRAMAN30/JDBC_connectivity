@@ -1,0 +1,57 @@
+7 Steps for connecting jdbc
+
+1) Import the package -> java.sql.*
+2)a) Load the driver
+  b) Register the driver -> Class.forname("com.mysql.jdbc.Driver")
+3) Establish the connection -> connection
+4) Create the statement -> 3 types: Statement, prepared Statement, Callable Statement.
+5) Execute the query -> information that is given inside the code
+6) Process the result
+7) Close
+
+SAMPLE CODE:
+
+1) import java.sql.*;
+main()
+{
+  2) Class.forName("com.mysql.jdbc.Driver");
+  3) Connection con = DriverManager.getConnection("URL","USERNAME","PASSWORD");  --> DriverManager(class), getconnection(static method).
+  4) Statement st = con.createStatement();
+  5) ResultSet rs = st.executeQuery("Select * from student");
+  6) while(rs.next()) --> {the pointer is on 1st line inorder to move to nextline rs.next() method is used.}
+	{
+	  System.out.print(rs.getInt(1)+" "+rs.getString(2)); --> {1,2 - column}
+	}
+  7) st.close();
+     con.close();
+
+EXAMPLE CODE: 
+
+package jdbclearning;
+
+import java.sql.*;
+
+public class Democlass {
+	
+	public static void main(String[] args) throws Exception
+	{
+		String url = "jdbc:mysql://localhost:3306/jdbc_connectivity";
+		String uname = "root";
+		String pass = "root";
+		String query = "select * from student";
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection(url, uname, pass);
+		Statement st= con.createStatement(); 
+		ResultSet rs = st.executeQuery(query);
+		while(rs.next())
+		{
+		String name = rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3);
+		
+		System.out.println(name);
+		}
+		st.close();
+		con.close();
+	}
+
+}
